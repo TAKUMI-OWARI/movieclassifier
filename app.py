@@ -1,14 +1,21 @@
 from flask import Flask, render_template, request
+from werkzeug.datastructures import ImmutableDict
 from wtforms import Form, TextAreaField, validators
+from vectorizer import vect
 from update import update_model
 import pickle
 import sqlite3
 import os
 import numpy as np
 
-from vectorizer import vect
+class FlaskWithHamlish(Flask):
+    jinja_options = ImmutableDict(
+        extensions=['jinja2.ext.autoescape', 'jinja2.ext.with_', 'hamlish_jinja.HamlishExtension']
+    )
 
-app = Flask(__name__)
+app = FlaskWithHamlish(__name__)
+app.jinja_env.hamlish_mode = 'indented'
+app.jinja_env.hamlish_enable_div_shortcut = True
 
 # 分類機の準備
 cur_dir = os.path.dirname(__file__)
@@ -47,11 +54,11 @@ def index():
     if request.method == 'POST' and form.validate():
         review = request.form['moviereview']
         y, proba = classify(review)
-        return render_template('results.html',
+        return render_template('results.haml',
                                content=review,
                                prediction=y,
                                probability=round(proba*100, 2))
-    return render_template('reviewform.html', form=form)
+    return render_template('reviewform.haml', form=form)
 
 @app.route('/results', methods=['POST'])
 def results():
@@ -59,11 +66,11 @@ def results():
     if request.method == 'POST' and form.validate():
         review = request.form['moviereview']
         y, proba = classify(review)
-        return render_template('results.html',
+        return render_template('results.haml',
                                content=review,
                                prediction=y,
                                probability=round(proba*100, 2))
-    return render_template('reviewform.html', form=form)
+    return render_template('reviewform.haml', form=form)
 
 @app.route('/thanks', methods=['POST'])
 def feedback():
@@ -77,7 +84,7 @@ def feedback():
         y = int(not(y))
     train(review, y)
     sqlite_entry(db, review, y)
-    return render_template('thanks.html')
+    return render_template('thanks.haml')
 
 if __name__ == '__main__':
     app.run(debug=True)

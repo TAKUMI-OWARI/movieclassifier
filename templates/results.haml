@@ -1,0 +1,25 @@
+%html
+  %head
+    %title Movie Classification
+    %link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"
+  %body
+    %h3
+      Your movie review:
+    %div
+      {{ content }}
+    %h3
+      Prediction:
+    %div 
+      This movie review is 
+      %strong
+        {{ prediction }}
+      (probability: {{ probability }}%).
+    %div id='button'
+      %form action="/thanks" method="post"
+        %input type=submit value='Correct' name='feedback_button'
+        %input type=submit value='Incorrect' name='feedback_button'
+        %input type=hidden value="{{ prediction }}" name='prediction'
+        %input type=hidden value="{{ content }}" name='review'
+    %div id='button'
+      %form action="/"
+        %input type=submit value='Submit another review'
