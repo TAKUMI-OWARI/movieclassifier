@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug.datastructures import ImmutableDict
+from werkzeug.utils import secure_filename
 from wtforms import Form, TextAreaField, validators
 from vectorizer import vect
 from update import update_model
