@@ -1,6 +1,91 @@
+/* common elements */
 body {
-  width: 600px;
+  width: 100%;
 }
 .button {
   padding-top: 20px;
+}
+*:focus {
+  outline: none;
+}
+input {
+  /* input要素全部に対して装飾 */
+  width: 200px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  background-image: linear-gradient(0deg, #a7d9f5, #eaf6fd); /* グラデーション */
+  border: 1px solid #3c7fb1; /* 枠線 */
+  border-radius: 0.3em;      /* 角丸 */
+}
+input:hover {
+  background-image: linear-gradient(0deg, #68d3db, #e5f4fc);
+  border: 1px solid #2c628b;
+}
+input:active {
+  background-image: linear-gradient(180deg, #68d3db, #e5f4fc);
+  border: 1px solid skyblue;
+}
+h3 {
+  color: black;
+  font-size: 25px;
+  background: greenyellow;
+}
+img {
+  float: left;
+  width: 120px;
+  height: 100px;
+}
+
+/* reviewform.haml */
+header {
+  margin: 0 auto;
+  padding: 0 30px 0 30px;
+  height: 100px;
+  background-color:#B1F9D0;
+}
+h1 {
+  margin: 0 auto;
+  text-align: center;
+  color: skyblue;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 100px;
+}
+ul.items {
+  float: right;
+  padding: 30px 0;
+}
+.logout_btn {
+  float: right;
+  width: 100px;
+  background: #ea352d;
+  border: 1px solid #ea352d;
+  color: #fff;
+}
+.logout_btn:hover {
+  background: #ea352d;
+  border: 1px solid #ea352d;
+}
+h2 {
+  padding: 40px 0;
+  color: #FFFF88;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+ul.errors {
+  padding: 30px 0;
+  font-size: 28px;
+  color: red;
+}
+.movie-review-form {
+  text-align: center;
+}
+textarea {
+  resize: none;
+  font-size: 30px;
+}
+.submit {
+  padding: 40px 0;
 }

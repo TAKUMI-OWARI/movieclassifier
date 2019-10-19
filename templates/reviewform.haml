@@ -1,12 +1,22 @@
 %html
   %head
-    %link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"
+    %link rel="stylesheet" type=text/css href="/static/reset.css"
+    %link rel="stylesheet" type=text/css href="/static/style.css"
   %body
-    %h2
-      Please enter your movie review:
-    {% from "_formhelpers.html" import render_field %}
-    %form method=post action="/results"
-      %dl
-        {{ render_field(form.moviereview, cols='30', rows='10') }}
-      %div
-        %input type=submit value='Submit review' name='submit_btn'
+    %header
+      %p
+        %img src="/static/images/movie-reviews-design.png" alt="movie-reviews-design"
+      %h1
+        Movie Review Classifier
+        %ul.items
+          %li.item
+            %input.logout_btn type=button onclick="location.href='./logout'" value="Log out"
+    %div style="background: url('/static/images/background-image.png') no-repeat;background-size: cover;"
+      %h2
+        Please enter your movie review !
+      {% from "_formhelpers.html" import render_field %}
+      %form.movie-review-form method=post action="/results"
+        %dl
+          {{ render_field(form.moviereview, cols='60', rows='14') }}
+        %div.submit
+          %input type=submit value='Submit review' name='submit_btn'
