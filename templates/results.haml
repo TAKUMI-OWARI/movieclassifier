@@ -4,23 +4,35 @@
     %link rel="stylesheet" type=text/css href="/static/reset.css"
     %link rel="stylesheet" type=text/css href="/static/style.css"
   %body
-    %h3
-      Your movie review:
-    %div
-      {{ content }}
-    %h3
-      Prediction:
-    %div 
-      This movie review is 
-      %strong
-        {{ prediction }}
-      (probability: {{ probability }}%).
-    %div id='button'
-      %form action="/thanks" method="post"
-        %input type=submit value='Correct' name='feedback_button'
-        %input type=submit value='Incorrect' name='feedback_button'
-        %input type=hidden value="{{ prediction }}" name='prediction'
-        %input type=hidden value="{{ content }}" name='review'
-    %div id='button'
-      %form action="/"
-        %input type=submit value='Submit another review'
+    %div style="background: url('/static/images/background-results.png') no-repeat;background-size: cover;height: 788px;"
+      %h3.movie-review-title
+        Your movie review
+      %p.movie-review
+        {{ content }}
+      {% if prediction == "positive" %}
+        %h3.prediction-title style="color: #FF3333;"
+          Prediction
+      {% elif prediction == "negative" %}
+        %h3.prediction-title style="color: #0000CC;"
+          Prediction
+      {% endif %}
+      .prediction 
+        This movie review is 
+        %strong.prediction-probability
+          {% if prediction == "positive" %}
+            %span.positive style="color: #FF3333;font-weight: bold;"
+              {{ prediction }}
+          {% elif prediction == "negative" %}
+            %span.negative style="color: #0000CC;font-weight: bold;"
+              {{ prediction }}
+          {% endif %}
+        (probability: {{ probability }}%).
+      %div id='button'
+        %form.feedback action="/thanks" method="post"
+          %input.correct_btn type=submit value='Correct' name='feedback_button'
+          %input.incorrect_btn type=submit value='Incorrect' name='feedback_button'
+          %input type=hidden value="{{ prediction }}" name='prediction'
+          %input type=hidden value="{{ content }}" name='review'
+      %div id='button'
+        %form.feedback-submit action="/"
+          %input.feedback-submit_btn type=submit value='Submit another review'
