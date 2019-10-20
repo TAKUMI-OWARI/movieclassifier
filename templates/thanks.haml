@@ -4,8 +4,9 @@
     %link rel="stylesheet" type=text/css href="/static/reset.css"
     %link rel="stylesheet" type=text/css href="/static/style.css"
   %body
-    %h3
-      Thank you for your feedback!
-    %div id='button'
-      %form action="/"
-        %input type=submit value='Submit another review'
+    %div style="background: url('/static/images/background-thanks.png') no-repeat;background-size: cover;height: 788px;"
+      %h3.thanks-title
+        Thank you for your feedback!
+      %div id='button'
+        %form.thanks-submit action="/"
+          %input.thanks-submit_btn type=submit value='Submit another review'

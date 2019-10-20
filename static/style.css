@@ -142,3 +142,22 @@ textarea {
   text-align: center;
   width: 230px;
 }
+
+/* thanks.haml */
+.thanks-submit {
+  text-align: center;
+  padding: 30px 0;
+}
+.thanks-submit_btn {
+  width: 250px;
+  height: 80px;
+  text-align: center;
+  font-size: 22px;
+}
+.thanks-title {
+  text-align: center;
+  padding: 300px 0 30px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #ea352d;
+}
