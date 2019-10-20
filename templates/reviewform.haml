@@ -11,12 +11,12 @@
         %ul.items
           %li.item
             %input.logout_btn type=button onclick="location.href='./logout'" value="Log out"
-    %div style="background: url('/static/images/background-image.png') no-repeat;background-size: cover;"
+    %div style="background: url('/static/images/background-reviewform.png') no-repeat;background-size: cover;"
       %h2
         Please enter your movie review !
       {% from "_formhelpers.html" import render_field %}
       %form.movie-review-form method=post action="/results"
         %dl
           {{ render_field(form.moviereview, cols='60', rows='14') }}
-        %div.submit
+        %div.movie-review-submit
           %input type=submit value='Submit review' name='submit_btn'
