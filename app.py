@@ -52,13 +52,6 @@ class ReviewForm(Form):
 @app.route('/')
 def index():
     form = ReviewForm(request.form)
-    if request.method == 'POST' and form.validate():
-        review = request.form['moviereview']
-        y, proba = classify(review)
-        return render_template('results.haml',
-                               content=review,
-                               prediction=y,
-                               probability=round(proba*100, 2))
     return render_template('reviewform.haml', form=form)
 
 @app.route('/results', methods=['POST'])
