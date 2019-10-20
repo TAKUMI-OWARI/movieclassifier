@@ -2,9 +2,6 @@
 body {
   width: 100%;
 }
-.button {
-  padding-top: 20px;
-}
 *:focus {
   outline: none;
 }
@@ -25,11 +22,6 @@ input:hover {
 input:active {
   background-image: linear-gradient(180deg, #68d3db, #e5f4fc);
   border: 1px solid skyblue;
-}
-h3 {
-  color: black;
-  font-size: 25px;
-  background: greenyellow;
 }
 img {
   float: left;
@@ -66,6 +58,7 @@ ul.items {
 .logout_btn:hover {
   background: #ea352d;
   border: 1px solid #ea352d;
+  opacity: 0.4;
 }
 h2 {
   padding: 40px 0;
@@ -86,6 +79,66 @@ textarea {
   resize: none;
   font-size: 30px;
 }
-.submit {
+.movie-review-submit {
   padding: 40px 0;
+}
+
+/* results.haml */
+.movie-review {
+  margin: 0 auto;
+  width: 80%;
+  font-size: 24px;
+  color: #333;
+}
+.movie-review-title {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  color: #333;
+}
+.prediction-title {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+}
+.prediction {
+  text-align: center;
+  font-size: 26px;
+}
+.feedback {
+  padding: 30px 0;
+  text-align: center;
+}
+.feedback-submit {
+  text-align: center;
+}
+.correct_btn {
+  margin-right: 15px;
+  width: 100px;
+  background:#FF3333;
+  border: 1px solid#FF3333;
+  color: #fff;
+}
+.correct_btn:hover {
+  background:#FF3333;
+  border: 1px solid #FF3333;
+  opacity: 0.4;
+}
+.incorrect_btn {
+  margin-left: 15px;
+  width: 100px;
+  background:#0000CC;
+  border: 1px solid #0000CC;
+  color: #fff;
+}
+.incorrect_btn:hover {
+  background:#0000CC;
+  border: 1px solid #0000CC;
+  opacity: 0.4;
+}
+.feedback-submit_btn {
+  text-align: center;
+  width: 230px;
 }
