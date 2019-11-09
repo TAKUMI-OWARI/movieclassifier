@@ -1,0 +1,23 @@
+%html
+  %head
+    %title Movie Classification
+    %link rel="stylesheet" type=text/css href="/static/reset.css"
+    %link rel="stylesheet" type=text/css href="/static/style.css"
+  %body
+    %h1 style="margin-bottom:50px"
+      ログイン画面
+    {% for category, message in get_flashed_messages(with=categories=true)%}
+    %div class="{{ category }}"
+      {{ message }}
+    {% endfor %}
+    %form method=post
+      .form-group
+        %label
+          ユーザー名
+        %input.form-control type=text name='username' 
+      .form-group
+        %label
+          パスワード
+        %input.form-control type=text name='password'
+      %button.btn.btn-primary
+        ログインする
