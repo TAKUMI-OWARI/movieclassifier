@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from flask import Flask, render_template, session, request, redirect, url_for, send_from_directory
 from werkzeug.datastructures import ImmutableDict
 from werkzeug.utils import secure_filename
 from wtforms import Form, TextAreaField, validators
+from datetime import datetime, date, timedelta
 from vectorizer import vect
 from update import update_model
 import pickle
@@ -15,6 +16,7 @@ class FlaskWithHamlish(Flask):
     )
 
 app = FlaskWithHamlish(__name__)
+app.config['SECRET_KEY'] = 'The secret key which ciphers the cookie'
 app.jinja_env.hamlish_mode = 'indented'
 app.jinja_env.hamlish_enable_div_shortcut = True
 
@@ -49,10 +51,119 @@ class ReviewForm(Form):
                                 [validators.DataRequired(),
                                  validators.length(min=15)])
 
-@app.route('/')
+# @app.before_request
+# def before_request():
+#     if session.get('username') is not None:
+#         return
+#     if request.path == '/login':
+#         return
+#     return redirect('/login')
+
+# @app.before_request
+# def load_logged_in_user():
+#     user_id = session.get('user_id')
+
+#     if user_id is None:
+#         g.user = None
+#     else:
+#         db = get_db()
+#         g.user = db.execute(
+#             'SELECT * FROM user WHERE id = ?',(user_id,)
+#         ).fetchone()
+
+@app.route('/create_user', methods=['GET','POST'])
+def create_user():
+    if request.method == 'GET':
+        return render_template('auth/create_user.haml', title='ユーザー登録', year=datetime.now().year)
+    
+    username = request.form['username']
+    password = request.form['password']
+
+    db = get_db()
+
+    error_message = None
+
+    if not username:
+        error_message = 'ユーザー名の入力は必須です'
+    elif not password:
+        error_message = 'パスワードの入力は必須です'
+    elif db.execute('SELECT id FROM user WHERE username=?', (username,)).fetchone()is not None:
+        error_message = 'ユーザー名{}はすでに使用されています'.format(username)
+
+    if error_message is not None:
+        flash(error_message, category='alert alert-danger')
+        return redirect(url_for('create_user'))
+
+    db.execute(
+        'INSERT INTO user (username, password) VALUES(?,?)',
+        (username, generate_password_hash(password))
+    )
+    db.commit()
+
+    flash('ユーザーログインが完了しました。登録した内容でログインしてください', category='alert alert-info')
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('auth/login.haml',
+                                title='ログイン',
+                                year=datetime.now().year)
+    
+    username = request.form['username']
+    password = request.form['password']
+
+    db = get_db()
+
+    error_message = None
+
+    user = db.execute(
+        'SELECT * FROM user WHERE username = ?',(username,)
+    ).fetchone()
+
+    if user is None:
+        error_message = 'ユーザー名が正しくありません'
+    elif not check_password_hash(user['password'],password):
+        error_message = 'パスワードが正しくありません'
+
+    if error_message is not None:
+        flash(error_message,category='alert alert-danger')
+        return reedirect(url_for('login'))
+    
+    session.clear()
+    session['user_id'] = user['id']
+    flash('{}さんとしてログインしました'.format(username),category='alert alert-info')
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('ログアウトしました',category='alert alert-info')
+    return redirect(url_for('index'))
+
+
+
+@app.route('/index')
 def index():
     form = ReviewForm(request.form)
     return render_template('reviewform.haml', form=form)
+
+# @app.route('/login', methods=['GET','POST'])
+# def login():
+#     if request.method == 'POST' and _is_account_valid():
+#         session['username'] == request.form['username']
+#         return redirect(url_for('index'))
+#     return render_template("login.haml")
+
+# def _is_account_valid():
+#     if request.form.get('username') is None:
+#         return False
+#     return True
+
+# @app.route('/logout', methods=['GET'])
+# def logout():
+#     session.pop('username', None)
+#     return redirect(url_for('login'))
 
 @app.route('/results', methods=['POST'])
 def results():

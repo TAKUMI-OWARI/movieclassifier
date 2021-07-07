@@ -1,0 +1,31 @@
+%html
+  %head
+    %title Movie Classification
+    %link rel="stylesheet" type=text/css href="/static/reset.css"
+    %link rel="stylesheet" type=text/css href="/static/style.css"
+  %body
+    %h1 style="margin-bottom:50px"
+      ユーザー登録画面
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+    %div class="{{ category }}"
+      {{ message }}
+    {% endfor %}
+    %form method=post
+      .form-item
+        %p.form-label
+          Email
+        %input.form-control type=email name='email'
+      .form-item
+        %p.form-label
+          ユーザー名
+        %input.form-control type=text name='username' maxlength=8
+      .form-item
+        %p.form-label
+          パスワード
+        %input.form-control type=password name='password' maxlength=16
+      .form-item
+        %p.form-label
+          パスワード(確認用)
+        %input.form-control type=password name='password-confirmation' maxlength=16
+      .form-item.pull-center
+        %input.register type=submit value='Submit'
