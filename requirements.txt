@@ -7,7 +7,7 @@ Jinja2==2.10.3
 joblib==0.14.0
 MarkupSafe==1.1.1
 nltk==3.4.5
-numpy==1.17.2
+numpy==1.22.0
 pandas==0.25.1
 psycopg2-binary==2.8.3
 PyPrind==2.11.2
